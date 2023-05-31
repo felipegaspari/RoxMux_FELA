@@ -26,16 +26,16 @@ class Rox74HC40XX {
     void begin(uint8_t ch1, uint8_t ch2, uint8_t ch3, int8_t ch4=-1){
       if(_muxChannels<3 || _muxChannels>4){
         delay(1000);
-        Serial.println("channel must be 3 or 4");
+        // Serial.println("channel must be 3 or 4");
         while(1);
       }
       if(_muxChannels==3 && _muxPins!=8){
         delay(1000);
-        Serial.println("_muxPins must be 8");
+        // Serial.println("_muxPins must be 8");
         while(1);
       } else if(_muxChannels==4 && _muxPins!=16){
         delay(1000);
-        Serial.println("_muxPins must be 16");
+        // Serial.println("_muxPins must be 16");
         while(1);
       }
       channels[0] = ch1;
@@ -48,7 +48,7 @@ class Rox74HC40XX {
         pinMode(channels[i], OUTPUT);
       }
       delay(10);
-      timeout = millis();
+      timeout = micros();
     }
     uint16_t getLength(){
       return _muxCount*_muxPins;
@@ -67,10 +67,14 @@ class Rox74HC40XX {
     // since we don't want to use an actual delay() we use an elapsedMillis
     // you can pass a value to this function in your sketch to change the
     // number of milliseconds between each pin read.
-    bool update(uint8_t readInterval=1){
-      if(millis()-timeout >= readInterval){
+    bool update(uint16_t readInterval=1, uint8_t digitalOrAnalog=0){
+      if(micros()-timeout >= readInterval){
+        if (digitalOrAnalog == 0){
         readMux();
-        timeout = millis();
+      } else {
+        readMuxDigital();
+      }
+        timeout = micros();
         // return true when the mux has been read
         // used for testing and to know when the mux has been read
         return true;
@@ -89,15 +93,37 @@ private:
     uint8_t signalPin[_muxCount];
     uint16_t values[_muxCount*_muxPins];
     unsigned long timeout;
+    unsigned long lastReadTime;
     const uint16_t totalPins = (_muxCount*_muxPins);
 
     void readMux(){
       for(uint8_t i = 0 ; i < _muxCount ; i++){
         uint8_t index = (i*_muxPins) + currentChannel;
         if(index < totalPins){
-          values[index] = analogRead(signalPin[i]);
+          values[index] = analogRead(signalPin[i]);          
         }
+        delayMicroseconds(1);
       }
+      // go to the next channel
+      currentChannel++;
+      if(currentChannel >= _muxPins){
+        currentChannel = 0;
+      }
+      // set the channel pins
+      for(uint8_t i=0 ; i < _muxChannels ; i++){
+        digitalWrite(channels[i], bitRead(currentChannel, i));
+      }
+    }
+        void readMuxDigital(){
+      for(uint8_t i = 0 ; i < _muxCount ; i++){
+        uint8_t index = (i*_muxPins) + currentChannel;
+        if(index < totalPins){
+          values[index] = digitalRead(signalPin[i]);
+
+        }
+        //delayMicroseconds(5);
+      }
+
       // go to the next channel
       currentChannel++;
       if(currentChannel >= _muxPins){

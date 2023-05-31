@@ -11,7 +11,7 @@
 
 // MUX_TOTAL is the number of 74HC4067s that you have chained together
 // if you have more than 1 then change it to that number.
-#define MUX_TOTAL 1
+#define MUX_TOTAL 2
 Rox74HC4067 <MUX_TOTAL> mux;
 
 
@@ -20,6 +20,7 @@ Rox74HC4067 <MUX_TOTAL> mux;
 #define PIN_S2  21
 #define PIN_S3  20
 #define PIN_SIG0  19
+#define PIN_SIG1  18
 
 // this is the pin of the 74HC4067 that we will read
 #define PIN_TO_READ 0
@@ -37,6 +38,8 @@ void setup(){
   // set what pin is the signal pin for the first mux
   // the first argument is the index of the mux, second is the pin number
   mux.setSignalPin(0, PIN_SIG0);
+  // second mux signal pin
+  mux.setSignalPin(1, PIN_SIG1);
 }
 
 void loop(){

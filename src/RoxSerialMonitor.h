@@ -12,17 +12,17 @@ public:
   RoxSerialMonitor(){
 
   }
-  void begin(uint32_t t_baud=0){
+  void begin(uint16_t t_baud=0){
     if(t_baud==0){
       return;
     }
-    Serial.begin(t_baud);
+    //Serial.begin(t_baud);
   }
   bool read(char *buff, uint16_t len){
     static uint8_t i = 0;
     char receivedChar;
-    while(Serial.available() > 0 && !filled){
-      receivedChar = Serial.read();
+    //while(Serial.available() > 0 && !filled){
+     // receivedChar = Serial.read();
       if((uint8_t)receivedChar != 10) {
         buff[i] = receivedChar;
         i++;
@@ -34,7 +34,7 @@ public:
         i = 0;
         filled = true;
       }
-    }
+    //}
     if(filled){
       filled = false;
       return true;
