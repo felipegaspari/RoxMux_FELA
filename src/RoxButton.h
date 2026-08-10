@@ -8,6 +8,10 @@
 #ifndef RoxButton_h
 #define RoxButton_h
 
+#ifndef ROXMUX_FELA_HOT
+#define ROXMUX_FELA_HOT(fn) fn
+#endif
+
 #define ROX_BTN_STATE                 0
 #define ROX_BTN_STATE_CHANGED         1
 #define ROX_BTN_STATE_HELD            2
@@ -75,7 +79,7 @@ class RoxButton {
     void begin(){
       debounce = millis();
     }
-    bool update(bool state, uint16_t t_debounce=50, bool t_logic=LOW){
+    bool ROXMUX_FELA_HOT(update)(bool state, uint16_t t_debounce=50, bool t_logic=LOW){
       flags.off(ROX_BTN_STATE_CHANGED);
       bool pressed = (t_logic==LOW) ? !state : state;
       if(((unsigned long)millis() - debounce) >= t_debounce){
@@ -102,7 +106,7 @@ class RoxButton {
         read(t_hold, ignoreAfterHold);
       }
     }
-    uint8_t read(uint16_t t_hold=ROX_BTN_HOLD_THRESH, bool ignoreAfterHold=false){
+    uint8_t ROXMUX_FELA_HOT(read)(uint16_t t_hold=ROX_BTN_HOLD_THRESH, bool ignoreAfterHold=false){
       if(stateChanged()){
         if(held(t_hold)){
           if(onUpdateCallback){
@@ -133,7 +137,7 @@ class RoxButton {
     void setDoublePressThreshold(uint16_t t_thres){
       doublePressTime = t_thres;
     }
-    bool doublePressed(bool allowRelease=false){
+    bool ROXMUX_FELA_HOT(doublePressed)(bool allowRelease=false){
       bool state = flags.toggleIfTrue(ROX_BTN_STATE_DBL_TRIGGERED);
       if(state && !allowRelease){
         flags.on(ROX_BTN_STATE_DBL_IGNORE_REL);
@@ -141,7 +145,7 @@ class RoxButton {
       return state;
     }
     //ROX_BTN_STATE_DBL_PRESS_STRT
-    bool pressed(){
+    bool ROXMUX_FELA_HOT(pressed)(){
       bool state = stateChanged() && isPressed();
       if(state){
         if(setDblPress()){
@@ -152,7 +156,7 @@ class RoxButton {
     }
     // you can pass a boolean to released() this will determine weather the
     // release will be triggered after a hold has been triggered
-    bool released(bool ignoreAfterHold=false){
+    bool ROXMUX_FELA_HOT(released)(bool ignoreAfterHold=false){
       bool state = stateChanged() && !isPressed();
       bool holdTriggered = flags.read(ROX_BTN_STATE_HOLD_TRIGGERED);
       bool dblTriggered = flags.read(ROX_BTN_STATE_DBL_IGNORE_REL);
@@ -171,7 +175,7 @@ class RoxButton {
       }
       return state;
     }
-    bool held(uint16_t holdTime=ROX_BTN_HOLD_THRESH){
+    bool ROXMUX_FELA_HOT(held)(uint16_t holdTime=ROX_BTN_HOLD_THRESH){
       bool state = isPressed() && btnHeld() && ((unsigned long)(millis()-holdDebounce)>=holdTime);
       if(state && !flags.read(ROX_BTN_STATE_HOLD_TRIGGERED)){
         flags.on(ROX_BTN_STATE_HOLD_TRIGGERED);
@@ -180,10 +184,10 @@ class RoxButton {
       }
       return false;
     }
-    bool latched(){
+    bool ROXMUX_FELA_HOT(latched)(){
       return stateChanged() && isPressed();
     }
-    bool unlatched(){
+    bool ROXMUX_FELA_HOT(unlatched)(){
       return stateChanged() && !isPressed();
     }
     bool getCurrentState(){

@@ -7,10 +7,32 @@
 
 #include <Arduino.h>
 
+// 1 = RP2040 __not_in_flash_func on RoxButton / Rox74HC595 hot methods (define before include).
+// 0 = portable / flash (library default). No-op if the attribute is missing.
+#ifndef ROXMUX_FELA_SRAM_HOT
+#define ROXMUX_FELA_SRAM_HOT 0
+#endif
+#if ROXMUX_FELA_SRAM_HOT
+#ifndef __not_in_flash_func
+#define __not_in_flash_func(fn) fn
+#endif
+#define ROXMUX_FELA_HOT(fn) __not_in_flash_func(fn)
+#else
+#define ROXMUX_FELA_HOT(fn) fn
+#endif
+#ifndef ROXMUX_FELA_CONFIG_REPORTED
+#define ROXMUX_FELA_CONFIG_REPORTED
+#if ROXMUX_FELA_SRAM_HOT
+#pragma message("RoxMux_fela: SRAM hot path ON (ROXMUX_FELA_SRAM_HOT=1) — Button/595 .time_critical")
+#else
+#pragma message("RoxMux_fela: SRAM hot path OFF (ROXMUX_FELA_SRAM_HOT=0) — library default")
+#endif
+#endif
+
 #define ROX_VERSION_MAJ     1
 #define ROX_VERSION_MIN     7
-#define ROX_VERSION_PATCH   4
-#define ROX_VERSION_STR     "1.7.4"
+#define ROX_VERSION_PATCH   5
+#define ROX_VERSION_STR     "1.7.5"
 
 //RoxLatchingRelay and RoxNonLatchingRelay
 #define ROX_RESET 0
