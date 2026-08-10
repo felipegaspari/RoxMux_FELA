@@ -4,7 +4,7 @@
   It's meant to help when using the typical encoders that have a switch pin.
   The class is a template so needs a few values
 */
-#include <RoxMux.h>
+#include <RoxMux_fela.h>
 
 
 // the template parameters are:

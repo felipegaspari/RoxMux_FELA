@@ -5,7 +5,7 @@
   For use with ANAMUX
 */
 
-#include <RoxMux.h>
+#include <RoxMux_fela.h>
 
 // ANAMUX has 2 74HC4067 multiplexers so the mux total is 2
 // if you have more that 1 ANAMUX wired then you want to increase

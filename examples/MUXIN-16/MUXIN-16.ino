@@ -1,7 +1,7 @@
 // This example is for the BadassMIDI.com MUXIN-16
 // Each MUXIN-16 has 16 pins, you can wire buttons to any of these pins.
 // OPEN THE SERIAL MONITOR TO VIEW the change of states of pins.
-#include <RoxMux.h>
+#include <RoxMux_fela.h>
 
 // pins for 74HC165
 #define PIN_DATA  23 // pin 9 on MUXIN-16 (DAT)

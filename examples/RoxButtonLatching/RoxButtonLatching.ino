@@ -11,7 +11,7 @@
   You can also look at RoxButton as a debouncer for a noisy digital signal
   that will also tell you if the signal was held in the active state.
 */
-#include <RoxMux.h>
+#include <RoxMux_fela.h>
 
 RoxButton button;
 

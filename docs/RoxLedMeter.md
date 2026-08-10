@@ -19,7 +19,7 @@ Give it a try and see for yourself!
 ```c++
 // THIS EXAMPLE USES DIRECT PINS ON YOUR ARDUINO
 
-#include <RoxMux.h>
+#include <RoxMux_fela.h>
 // How many leds will be used
 #define TOTAL_LEDS 4
 // this library requires all pins to be wired incrementally,

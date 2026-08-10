@@ -9,7 +9,7 @@
   Wire a momentary button to toggle between master/slave
   It will start as Master
 */
-#include <RoxMux.h>
+#include <RoxMux_fela.h>
 #include <MIDI.h>
 
 #define BUTTON_PIN 2

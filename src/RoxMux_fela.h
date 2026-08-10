@@ -2,10 +2,15 @@
   https://www.RoxXxtar.com/bmc
   Licensed under the MIT license. See LICENSE file in the project root for full license information.
 */
-#ifndef RoxMux_h
-#define RoxMux_h
+#ifndef RoxMux_fela_h
+#define RoxMux_fela_h
 
 #include <Arduino.h>
+
+#define ROX_VERSION_MAJ     1
+#define ROX_VERSION_MIN     7
+#define ROX_VERSION_PATCH   4
+#define ROX_VERSION_STR     "1.7.4"
 
 //RoxLatchingRelay and RoxNonLatchingRelay
 #define ROX_RESET 0
@@ -48,6 +53,7 @@
 #include "RoxEncoderWithButton.h"
 #include "RoxPot.h"
 #include "RoxLed.h"
+#include "RoxFadingLed.h"
 #include "RoxLedMeter.h"
 #include "RoxLatchingRelay.h"
 #include "RoxNonLatchingRelay.h"

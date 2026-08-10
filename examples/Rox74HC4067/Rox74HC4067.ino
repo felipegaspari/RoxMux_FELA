@@ -7,7 +7,7 @@
   Rox74HC4051, this is a 8 pin analog-in multiplexer
 */
 
-#include <RoxMux.h>
+#include <RoxMux_fela.h>
 
 // MUX_TOTAL is the number of 74HC4067s that you have chained together
 // if you have more than 1 then change it to that number.

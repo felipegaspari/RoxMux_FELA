@@ -18,7 +18,7 @@ See the examples for more info
 
 
 ```c++
-#include <RoxMux.h>
+#include <RoxMux_fela.h>
 
 // specify the time the coil needs to be energize
 // refer to your relay's datasheet for that value

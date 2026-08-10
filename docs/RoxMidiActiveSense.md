@@ -12,7 +12,7 @@ See the Example for more info.
 
 
 ```c++
-#include <RoxMux.h>
+#include <RoxMux_fela.h>
 #include <MIDI.h>
 
 #define BUTTON_PIN 2

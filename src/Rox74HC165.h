@@ -28,7 +28,7 @@ class Rox74HC165 {
     Rox74HC165(){}
     void begin(uint8_t t_data, uint8_t t_load, uint8_t t_clk){
       if(t_clk==t_load || t_clk==t_data || t_load==t_data){
-        Serial.println("invalid 74HC165 pins used");
+        // Serial.println("invalid 74HC165 pins used");
         while(1);
       }
       clkPin = t_clk;

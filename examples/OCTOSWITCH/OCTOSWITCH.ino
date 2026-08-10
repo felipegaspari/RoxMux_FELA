@@ -1,7 +1,7 @@
 // This example is for the BadassMIDI.com OCTOSWITCH
 // Each OCTOSWITCH has 8 buttons, you can chain multiple OCTOSWITCH boards in series
 // OPEN THE SERIAL MONITOR TO VIEW the change of states of pins.
-#include <RoxMux.h>
+#include <RoxMux_fela.h>
 
 // pins for 74HC165
 #define PIN_DATA  23 // pin 9 on MUXIN-16 (DAT)
@@ -54,6 +54,10 @@ void onButtonPress(uint16_t btnIndex, uint8_t btnType){
     // button 0 was pressed
     // do something
   }
+  
+  // if you want a button to have dual function like a press and a hold
+  // use ROX_HELD and and ROX_RELEASED, the ROX_PRESS type will always be triggered.
+  // also make sure you set the setIgnoreAfterHold method to true for the pin you are reading
 
   Serial.print("Button # ");
   Serial.print(btnIndex);

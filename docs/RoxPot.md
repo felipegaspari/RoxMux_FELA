@@ -17,7 +17,7 @@ accurate reading!
 Give it a try and see for yourself!
 
 ```c++
-#include <RoxMux.h>
+#include <RoxMux_fela.h>
 
 // MUX_TOTAL is the number of 74HC595s that you have chained together
 // if you have more than 1 then change it to that number.

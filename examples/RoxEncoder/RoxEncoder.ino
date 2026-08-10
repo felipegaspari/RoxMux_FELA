@@ -14,7 +14,7 @@
   Then you are responsible for keeping track of what changes based on the direction
   of the rotation
 */
-#include <RoxMux.h>
+#include <RoxMux_fela.h>
 
 RoxEncoder encoder;
 

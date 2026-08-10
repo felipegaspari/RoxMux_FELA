@@ -18,7 +18,7 @@ Give it a try and see for yourself!
 
 ```c++
 
-#include <RoxMux.h>
+#include <RoxMux_fela.h>
 
 RoxEncoder encoder;
 

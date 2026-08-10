@@ -8,7 +8,7 @@
 
   Wire a momentary button to act as a Tap Tempo
 */
-#include <RoxMux.h>
+#include <RoxMux_fela.h>
 #include <MIDI.h>
 
 #define BUTTON_PIN 2

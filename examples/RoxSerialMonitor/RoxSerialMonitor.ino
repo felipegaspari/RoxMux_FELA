@@ -7,7 +7,7 @@
 
   Use at your own risk.
 */
-#include <RoxMux.h>
+#include <RoxMux_fela.h>
 
 // pin for test led
 #define LED_PIN 13

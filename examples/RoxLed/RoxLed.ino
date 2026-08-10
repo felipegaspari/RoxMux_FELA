@@ -5,7 +5,7 @@
   turn on for a predetermined time then to turn off and stay off)
   You can use RoxLed to directly control a pin or within Rox74HC595 and RoxMCP2301X
 */
-#include <RoxMux.h>
+#include <RoxMux_fela.h>
 
 // for this example we'll use the built-in led on pin 13
 RoxLed led;
@@ -47,6 +47,17 @@ void setup(){
   //led.setMode(ROX_PULSE);
 
   prevTime = millis();
+
+
+  // Polarity, you can reverse the polarity of the pin
+  // false: sets led pin HIGH when calling .on() and LOW with .off()
+  // true:  sets led pin LOW when calling .on() and HIGH with .off()
+  // changing the polarity automatically turns the led off
+  // use it in the setup function.
+  led.reversePolarity(true);
+
+  // you can get the current polarity value
+  // led.getPolarity();
 
   // turn the led on
   led.on();

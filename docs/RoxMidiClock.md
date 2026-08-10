@@ -21,7 +21,7 @@ In slave mode you call the .tick() method which will whenever teh 0xF8 MIDI stat
 See the Example for more info.
 
 ```c++
-#include <RoxMux.h>
+#include <RoxMux_fela.h>
 #include <MIDI.h>
 
 #define BUTTON_PIN 2

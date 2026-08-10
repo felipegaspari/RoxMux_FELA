@@ -1,4 +1,4 @@
-#include <RoxMux.h>
+#include <RoxMux_fela.h>
 
 // MUX_TOTAL is the number of 74HC165s that you have chained together
 // if you have more than 1 then change it to that number.

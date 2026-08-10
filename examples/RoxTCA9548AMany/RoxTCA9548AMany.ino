@@ -17,7 +17,7 @@
   Happy Coding!
 */
 
-#include <RoxMux.h>
+#include <RoxMux_fela.h>
 
 // the number "1" specifies how many TCA9548As are to be used
 RoxTCA9548A <1> mux;

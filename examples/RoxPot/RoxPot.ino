@@ -42,7 +42,7 @@
   Because of this you must add the pinMode for your pin in your setup code
 
 */
-#include <RoxMux.h>
+#include <RoxMux_fela.h>
 
 // this value can range from 10 to 7
 // this value determines how many bits to map down to.

@@ -22,7 +22,7 @@ See the examples for more info
 
 
 ```c++
-#include <RoxMux.h>
+#include <RoxMux_fela.h>
 
 // for this example we'll use the built-in led on pin 13
 RoxLed led;

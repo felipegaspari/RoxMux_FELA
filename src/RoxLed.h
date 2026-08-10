@@ -13,12 +13,13 @@
 #include "RoxFlags.h"
 
 // flags
-#define ROX_LED_FLAG_MODE_BLINK 0
-#define ROX_LED_FLAG_MODE_PULSE 1
-#define ROX_LED_FLAG_LED_STATE_CHANGED 2
-#define ROX_LED_FLAG_LED_STATE 3
-#define ROX_LED_FLAG_LED_BLINK_STATE 4
-#define ROX_LED_FLAG_LED_PULSE 5
+#define ROX_LED_FLAG_MODE_BLINK         0
+#define ROX_LED_FLAG_MODE_PULSE         1
+#define ROX_LED_FLAG_LED_STATE_CHANGED  2
+#define ROX_LED_FLAG_LED_STATE          3
+#define ROX_LED_FLAG_LED_BLINK_STATE    4
+#define ROX_LED_FLAG_LED_PULSE          5
+#define ROX_LED_FLAG_REVERSED           6
 
 // ***************************************
 // ***************************************
@@ -54,7 +55,11 @@ private:
   }
   bool pinControl(bool state){
     if(pin >= 0){
-      digitalWrite(pin, state?HIGH:LOW);
+      if(flags.read(ROX_LED_FLAG_REVERSED)){
+        digitalWrite(pin, state?LOW:HIGH);
+      } else {
+        digitalWrite(pin, state?HIGH:LOW);
+      }
     }
     return isOn();
   }
@@ -65,11 +70,12 @@ public:
   RoxLed(){
 
   }
-  void begin(int16_t t_pin=-1){
+  void begin(int16_t t_pin=-1, bool reversed=false){
     if(t_pin >= 0){
       pin = t_pin;
+      flags.write(ROX_LED_FLAG_REVERSED, reversed);
       pinMode(pin, OUTPUT);
-      digitalWrite(pin, LOW);
+      digitalWrite(pin, reversed?HIGH:LOW);
     }
     prevTime = millis();
   }
@@ -84,6 +90,21 @@ public:
         flags.on(ROX_LED_FLAG_MODE_PULSE);
         break;
     }
+  }
+  void reversePolarity(bool t_value){
+    if(t_value != flags.read(ROX_LED_FLAG_REVERSED)){
+      flags.write(ROX_LED_FLAG_REVERSED, t_value);
+      if(isOn()){
+        off();
+        on();
+      } else {
+        on();
+        off();
+      }
+    }
+  }
+  bool getPolarity(){
+    return flags.read(ROX_LED_FLAG_REVERSED);
   }
   bool isOn(){
     return flags.read(ROX_LED_FLAG_LED_STATE);

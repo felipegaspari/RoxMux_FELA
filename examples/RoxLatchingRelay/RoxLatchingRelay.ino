@@ -5,7 +5,7 @@
   UNLIKE THE OTHER ROX UTILITY CLASSES,
   THIS CLASS CURRENTLY DOES NOT SUPPORT MUX CONTROL
 */
-#include <RoxMux.h>
+#include <RoxMux_fela.h>
 
 // specify the time the coil needs to be energize
 // refer to your relay's datasheet for that value

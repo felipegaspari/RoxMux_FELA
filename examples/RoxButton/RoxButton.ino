@@ -11,7 +11,7 @@
   You can also look at RoxButton as a debouncer for a noisy digital signal
   that will also tell you if the signal was held in the active state.
 */
-#include <RoxMux.h>
+#include <RoxMux_fela.h>
 
 RoxButton button;
 
@@ -57,6 +57,10 @@ void loop(){
   //    if your pin has a pullup resisitor then the active state will be LOW,
   //    if it's a pulldown resistor then the active state is HIGH.
   button.update(digitalRead(0), 50, LOW);
+
+  // if you want your button to have dual functionality like one for press and one
+  // for hold, you will have to use held() and released() not pressed()
+  // otherwise the button will always read the pressed() method.
 
   // the .held() function can take the time in milliseconds that you want to hold
   // the button for, if no value is passed the default 500ms will be used

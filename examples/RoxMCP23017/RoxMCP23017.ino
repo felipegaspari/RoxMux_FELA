@@ -27,7 +27,7 @@
 
   DON'T FORGET TO ADD RESISTORS TO YOUR LED!!
 */
-#include <RoxMux.h>
+#include <RoxMux_fela.h>
 
 // 0x20 is the address of the MCP2301X chip
 // if you plan on using multiple MCPs just create an instance for each one
