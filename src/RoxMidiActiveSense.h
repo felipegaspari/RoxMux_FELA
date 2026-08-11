@@ -11,7 +11,7 @@
 #ifndef RoxMidiActiveSense_h
 #define RoxMidiActiveSense_h
 
-#include <RoxFlags.h>
+#include "RoxFlags.h"
 
 class RoxMidiActiveSense {
 private:
