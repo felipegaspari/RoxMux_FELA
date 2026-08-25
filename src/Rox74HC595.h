@@ -17,6 +17,15 @@
 #define ROXMUX_FELA_HOT(fn) fn
 #endif
 
+// This class's hot methods need their own RAM section names: GCC 14+ (rp2040
+// core 6.x) rejects sharing e.g. ".time_critical.update" between the comdat
+// template methods here and RoxButton's plain inline update().
+#if defined(ROXMUX_FELA_SRAM_HOT) && ROXMUX_FELA_SRAM_HOT && defined(__not_in_flash)
+#define ROXMUX_FELA_HOT_595(fn) __not_in_flash("Rox74HC595_" __STRING(fn)) fn
+#else
+#define ROXMUX_FELA_HOT_595(fn) ROXMUX_FELA_HOT(fn)
+#endif
+
 #include "RoxFlags.h"
 #include "RoxLed.h"
 
@@ -38,21 +47,21 @@ private:
   int8_t dataPin    = -1;
   int8_t pwmPin     = -1;
 
-  void ROXMUX_FELA_HOT(_updateMuxReverse)(){
+  void ROXMUX_FELA_HOT_595(_updateMuxReverse)(){
     for(int mux = _muxCount-1; mux >= 0; mux--){
       for(uint8_t mask=0x80; mask; mask >>= 1){
         _writeToMux(mux, mask);
       }
     }
   }
-  void ROXMUX_FELA_HOT(_updateMux)(){
+  void ROXMUX_FELA_HOT_595(_updateMux)(){
     for(int mux = 0; mux < _muxCount; mux++){
       for(uint8_t mask=0x80; mask; mask >>= 1){
         _writeToMux(mux, mask);
       }
     }
   }
-  void ROXMUX_FELA_HOT(_writeToMux)(uint8_t mux, uint8_t mask){
+  void ROXMUX_FELA_HOT_595(_writeToMux)(uint8_t mux, uint8_t mask){
     if(flags.read(ROXMUX_74HC595_FLAG_BLINK_ENABLED)){
       if((states[mux] & mask) && (blinkStates[mux] & mask)){
         digitalWrite(dataPin, flags.read(ROXMUX_74HC595_FLAG_BLINK_STATE));
@@ -96,7 +105,7 @@ public:
     flags.on(ROXMUX_74HC595_FLAG_CHANGED);
     update();
   }
-  void ROXMUX_FELA_HOT(update)(){
+  void ROXMUX_FELA_HOT_595(update)(){
     if(flags.toggleIfTrue(ROXMUX_74HC595_FLAG_CHANGED)){
       // set load pin
       digitalWrite(latchPin, LOW);
@@ -154,8 +163,8 @@ public:
     }
   }
   // expects a zero-index value
-  void ROXMUX_FELA_HOT(writePin)(uint16_t t_pin, bool on){
-    uint8_t muxIndex = (uint8_t)floor(t_pin/8.0);
+  void ROXMUX_FELA_HOT_595(writePin)(uint16_t t_pin, bool on){
+    uint8_t muxIndex = (uint8_t)(t_pin / 8);
     if(muxIndex>0){
       t_pin -= (muxIndex*8);
     }
@@ -165,14 +174,14 @@ public:
     bitWrite(states[muxIndex], t_pin, on);
   }
   bool readPin(uint16_t t_pin){
-    uint8_t muxIndex = (uint8_t)floor(t_pin/8.0);
+    uint8_t muxIndex = (uint8_t)(t_pin / 8);
     if(muxIndex>0){
       t_pin -= (muxIndex*8);
     }
     return bitRead(states[muxIndex], t_pin);
   }
   void togglePin(uint16_t t_pin){
-    uint8_t muxIndex = (uint8_t)floor(t_pin/8.0);
+    uint8_t muxIndex = (uint8_t)(t_pin / 8);
     if(muxIndex>0){
       t_pin -= (muxIndex*8);
     }
@@ -181,7 +190,7 @@ public:
     flags.on(ROXMUX_74HC595_FLAG_CHANGED);
   }
   void blinkPin(uint16_t t_pin, bool on){
-    uint8_t muxIndex = (uint8_t)floor(t_pin/8.0);
+    uint8_t muxIndex = (uint8_t)(t_pin / 8);
     if(muxIndex>0){
       t_pin -= (muxIndex*8);
     }
